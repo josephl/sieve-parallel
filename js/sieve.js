@@ -1,4 +1,5 @@
 var app = app || {};
+window.clog = function(msg) { return console.log(msg); };
 
 (function($) {
 
@@ -10,7 +11,7 @@ var app = app || {};
         primefg: 'white',
         primebg: 'red'
     };
-    app.delay = 10;   // sieving time (ms)
+    app.delay = 1;   // sieving time (ms)
     app.locked = false;     // mutex
 
     /*
@@ -50,14 +51,15 @@ var app = app || {};
             if (typeof this.markNext(this.point.get('value')) === 'undefined') {
                 this.point = this.nextPrime();
                 if (typeof this.point === 'undefined') {
-                    console.log('done');
+                    console.log('Done: ' + (((new Date()).getTime() - app.start) / 1000) + ' sec');
                     clearInterval(app.timer);
                     return undefined;
                 }
                 else {
                     this.point.set('prime', 'true');
                 }
-                this.markNext(this.point);
+                var marked = this.markNext(this.point);
+                this.remove(marked);
             }
         }
     });
@@ -148,6 +150,7 @@ var app = app || {};
     app.table = new TableView();
     $('#numDiv').append(app.table.el);
 
+    app.start = (new Date()).getTime();
     app.timer = setInterval(function() {
         if (!app.locked) {
             app.locked = true;

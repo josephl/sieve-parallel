@@ -59,7 +59,7 @@ window.clog = function(msg) { return console.log(msg); };
                     this.point.set('prime', 'true');
                 }
                 var marked = this.markNext(this.point);
-                this.remove(marked);
+                //this.remove(marked);
             }
         }
     });
@@ -104,17 +104,14 @@ window.clog = function(msg) { return console.log(msg); };
         tagName: 'table',
         className: 'num',
         id: 'numbers',
-        columns: 10,
+        columns: 32,
         initialize: function() {
-            var max = 5000;
+            var max = Math.pow(2, 10) + 1;
             this.rows = Math.ceil(max / this.columns);
-            //for (var i = 0; i < this.rows; i++) {
-            //    this.$el.append('<tr id="row" class="num"></tr>');
-            //}
-            app.numlist = getRange(1, max);
-            //for (var i = 0; i < app.numlist.length; i++) {
+            app.numlist = getRange(3, max, 2);
+            var nums = app.numlist.length;
             var i = 0, rowCount, curRow;
-            while (i < max) {
+            while (i < nums) {
                 rowCount = i % this.columns;
                 if (rowCount === 0) {
                     if (typeof curRow !== 'undefined') {
@@ -131,7 +128,6 @@ window.clog = function(msg) { return console.log(msg); };
             }
             return this;
         }
-
     });
 
     function getRange(min, max, step) {
@@ -141,7 +137,9 @@ window.clog = function(msg) { return console.log(msg); };
             numArray.push({ value: i, marked: false });
         }
         var numlist = new Numbers(numArray);
-        numlist.markNext(1);
+        if (numlist.at(0).get('value') === 1) {
+            numlist.markNext(1);
+        }
         return numlist;
     }
 

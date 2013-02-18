@@ -64,9 +64,6 @@ window.clog = function(msg) { return console.log(msg); };
         }
     });
 
-    //var Processor = Backbone.Model.extend({
-    //    memory: Numbers
-
     /*
      * Views
      */

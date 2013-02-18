@@ -107,22 +107,22 @@ window.clog = function(msg) { return console.log(msg); };
         columns: 32,
         initialize: function() {
             var max = Math.pow(2, 10) + 1;
-            this.rows = Math.ceil(max / this.columns);
             app.numlist = getRange(3, max, 2);
             var nums = app.numlist.length;
+            this.rows = Math.ceil(nums / this.columns);
 
             var i = 0, rowCount, curRow,
                 rowElems = [];      // array of prerendered row dom els
 
             //pre-render rows
-            for (var i = 0; i < this.columns; i++) {
+            for (var i = 0; i < this.rows; i++) {
                 rowElems.push($('<tr id="row" class="num"></tr>'));
             }
 
             // add cells vertically
             for (var i = 0; i < nums; i++) {
                 var newNumView = new NumView(app.numlist.at(i));
-                rowElems[i % this.columns].append(newNumView.el);
+                rowElems[i % this.rows].append(newNumView.el);
             }
 
             // add all rows to dom

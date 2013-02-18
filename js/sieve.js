@@ -11,7 +11,7 @@ window.clog = function(msg) { return console.log(msg); };
         primefg: 'white',
         primebg: 'red'
     };
-    app.delay = 1;   // sieving time (ms)
+    app.delay = 10;   // sieving time (ms)
     app.locked = false;     // mutex
 
     /*
@@ -63,6 +63,9 @@ window.clog = function(msg) { return console.log(msg); };
             }
         }
     });
+
+    //var Processor = Backbone.Model.extend({
+    //    memory: Numbers
 
     /*
      * Views
@@ -131,16 +134,17 @@ window.clog = function(msg) { return console.log(msg); };
 
     });
 
-    function getRange(min, max) {
+    function getRange(min, max, step) {
         var numArray = [];
-        if (min < 0) { min = 1; }
-        for (var i = min; i <= max; i++) {
+        if (typeof step === 'undefined' || step < 1) { step = 1; }
+        for (var i = min; i <= max; i += step) {
             numArray.push({ value: i, marked: false });
         }
         var numlist = new Numbers(numArray);
         numlist.markNext(1);
         return numlist;
     }
+
 
     //app.numlist = getRange(1, 1000);
     //for (var i = 0; i < app.numlist.length; i++) {

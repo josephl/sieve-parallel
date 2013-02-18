@@ -136,30 +136,6 @@ window.clog = function(msg) { return console.log(msg); };
 
             return this;
         }
-        // old
-        // initialize: function() {
-        //     var max = Math.pow(2, 10) + 1;
-        //     this.rows = Math.ceil(max / this.columns);
-        //     app.numlist = getRange(3, max, 2);
-        //     var nums = app.numlist.length;
-        //     var i = 0, rowCount, curRow;
-        //     while (i < nums) {
-        //         rowCount = i % this.columns;
-        //         if (rowCount === 0) {
-        //             if (typeof curRow !== 'undefined') {
-        //                 this.$el.append(curRow);
-        //             }
-        //             curRow = $('<tr id="row" class="num"></tr>');
-        //         }
-        //         var newNumView = new NumView(app.numlist.at(i));
-        //         curRow.append(newNumView.el);
-        //         i++;
-        //     }
-        //     if (typeof curRow !== 'undefined') {
-        //         this.$el.append(curRow);
-        //     }
-        //     return this;
-        // }
     });
 
     function getRange(min, max, step) {

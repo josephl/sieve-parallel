@@ -110,24 +110,56 @@ window.clog = function(msg) { return console.log(msg); };
             this.rows = Math.ceil(max / this.columns);
             app.numlist = getRange(3, max, 2);
             var nums = app.numlist.length;
-            var i = 0, rowCount, curRow;
-            while (i < nums) {
-                rowCount = i % this.columns;
-                if (rowCount === 0) {
-                    if (typeof curRow !== 'undefined') {
-                        this.$el.append(curRow);
-                    }
-                    curRow = $('<tr id="row" class="num"></tr>');
-                }
-                var newNumView = new NumView(app.numlist.at(i));
-                curRow.append(newNumView.el);
-                i++;
+
+            var i = 0, rowCount, curRow,
+                rowElems = [];      // array of prerendered row dom els
+
+            //pre-render rows
+            for (var i = 0; i < this.columns; i++) {
+                rowElems.push($('<tr id="row" class="num"></tr>'));
             }
+
+            // add cells vertically
+            for (var i = 0; i < nums; i++) {
+                var newNumView = new NumView(app.numlist.at(i));
+                rowElems[i % this.columns].append(newNumView.el);
+            }
+
+            // add all rows to dom
+            for (var i = 0; i < this.rows; i++) {
+                this.$el.append(rowElems[i]);
+            }
+
             if (typeof curRow !== 'undefined') {
                 this.$el.append(curRow);
             }
+
             return this;
         }
+        // old
+        // initialize: function() {
+        //     var max = Math.pow(2, 10) + 1;
+        //     this.rows = Math.ceil(max / this.columns);
+        //     app.numlist = getRange(3, max, 2);
+        //     var nums = app.numlist.length;
+        //     var i = 0, rowCount, curRow;
+        //     while (i < nums) {
+        //         rowCount = i % this.columns;
+        //         if (rowCount === 0) {
+        //             if (typeof curRow !== 'undefined') {
+        //                 this.$el.append(curRow);
+        //             }
+        //             curRow = $('<tr id="row" class="num"></tr>');
+        //         }
+        //         var newNumView = new NumView(app.numlist.at(i));
+        //         curRow.append(newNumView.el);
+        //         i++;
+        //     }
+        //     if (typeof curRow !== 'undefined') {
+        //         this.$el.append(curRow);
+        //     }
+        //     return this;
+        // }
     });
 
     function getRange(min, max, step) {

@@ -11,7 +11,7 @@ window.clog = function(msg) { return console.log(msg); };
         primefg: 'white',
         primebg: 'red'
     };
-    app.delay = 100;   // sieving time (ms)
+    app.delay = 150;   // sieving time (ms)
     app.locked = false;     // mutex
 
     /*
@@ -241,6 +241,9 @@ window.clog = function(msg) { return console.log(msg); };
                 // done sieving. stop timer, mark the rest as prime
                 clearInterval(app.timer);
                 app.table.remainingPrime();
+                console.log('Done: ' +
+                    (((new Date()).getTime() - app.start) / 1000 ) +
+                    's with a step delay of ' + app.delay + 'ms');
             }
         }
         else {
